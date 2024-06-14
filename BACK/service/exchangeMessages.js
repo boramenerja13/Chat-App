@@ -1,4 +1,4 @@
-const Message = require('../models'); //do krijoj nje model per mesazhet 
+const Message = require('../models/message'); //do krijoj nje model per mesazhet 
 
 exports.sendMessage = async (senderId, receiverId, messageContent) => {
   try {
