@@ -4,8 +4,12 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const messageRoutes = require('./routes/exchangeMessage');
 const authRoutes = require('./routes/auth');
+const http = require('http');
+const socketIo = require('socket.io');
 
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
 
 app.use(bodyParser.json());
 
@@ -23,7 +27,7 @@ app.use((error, req, res, next) => {
 
 mongoose.connect('mongodb+srv://boramenerja:bora2000@cluster0.fzoxfay.mongodb.net/chatapp')
   .then(result => {
-    app.listen(3000, () => {
+    server.listen(3000, () => {
       console.log('Server is running on port 3000');
     });
   })
@@ -31,4 +35,17 @@ mongoose.connect('mongodb+srv://boramenerja:bora2000@cluster0.fzoxfay.mongodb.ne
     console.error('Failed to connect to MongoDB', err);
   });
 
-module.exports = app;
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+
+  socket.on('sendMessage', (data) => {
+    // Broadcast the message to other users
+    io.emit('receiveMessage', data);
+  });
+});
+
+module.exports = { app, io };
