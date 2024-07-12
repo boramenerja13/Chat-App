@@ -1,29 +1,31 @@
+
 import { Component, OnInit } from '@angular/core';
-import * as io from 'socket.io-client';
+import { SocketService } from '../socket.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-root',
-  template: `
-    <div>
-      <h1>Socket.IO Client Example</h1>
-      <p>{{ message }}</p>
-    </div>
-  `
+  selector: 'app-chat',
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.css'],
+  imports: [FormsModule],
+  standalone: true
 })
 export class ChatComponent implements OnInit {
-  private socket!: io.Socket;
-  message!: string;
+  messages: string[] = [];
+  newMessage: string = '';
 
-  ngOnInit() {
-    // Connect to socket.io server
-    this.socket = io.connect('http://localhost:3000');
+  constructor(private socketService: SocketService) { }
 
-    // Listen for 'message' event from server
-    this.socket.on('message', (data: any) => {
-      this.message = data;
+  ngOnInit(): void {
+    this.socketService.onMessage((message: string) => {
+      this.messages.push(message);
     });
+  }
 
-    // Example: Emit a 'chat message' event to the server
-    this.socket.emit('chat message', 'Hello from Angular client!');
+  sendMessage(): void {
+    if (this.newMessage.trim()) {
+      this.socketService.sendMessage(this.newMessage);
+      this.newMessage = '';
+    }
   }
 }
