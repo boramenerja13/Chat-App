@@ -1,18 +1,21 @@
-
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../socket.service';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatListModule],
   standalone: true
 })
 export class ChatComponent implements OnInit {
   messages: string[] = [];
-  newMessage: string = '';
+  newMessage = new FormControl('');
 
   constructor(private socketService: SocketService) { }
 
@@ -23,9 +26,10 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage(): void {
-    if (this.newMessage.trim()) {
-      this.socketService.sendMessage(this.newMessage);
-      this.newMessage = '';
+    const message = this.newMessage.value;
+    if (message && message.trim()) {
+      this.socketService.sendMessage(message.trim());
+      this.newMessage.setValue('');
     }
   }
 }
