@@ -1,13 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
 const messageRoutes = require('./routes/exchangeMessage');
 const authRoutes = require('./routes/auth');
+const authController = require('./controller/auth');
 const http = require('http');
-const { Server } = require("socket.io");
+const { Server } = require('socket.io');
 const cors = require('cors');
-const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
@@ -32,14 +31,9 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message });
 });
 
-// app.use(express.static(path.join(__dirname, 'path-to-your-angular-build-directory')));
-
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'path-to-your-angular-build-directory', 'index.html'));
-// });
-
-// mongoose.connect('mongodb+srv://boramenerja:bora2000@cluster0.fzoxfay.mongodb.net/chatapp')
-//   .then(result => {
+//regjistron routet ne entry point 
+mongoose.connect('mongodb+srv://boramenerja:bora2000@cluster0.fzoxfay.mongodb.net/chatapp')
+  .then(result => {
     io.on('connection', (socket) => {
       console.log('a user connected');
 
@@ -48,18 +42,18 @@ app.use((error, req, res, next) => {
       });
 
       socket.on('message', (data) => {
-        console.log(data)
-        // Broadcast the message to other users
-        // io.emit('message', data);
+        console.log(data);
+        io.emit('message', data);
       });
     });
+
     server.listen(3000, () => {
       console.log('Server is running on port 3000');
     });
-  // })
-  // .catch(err => {
-  //   console.error('Failed to connect to MongoDB', err);
-  // });
+  })
+  .catch(err => {
+    console.error('Failed to connect to database', err);
+  });
 
 module.exports = { app, io };
 

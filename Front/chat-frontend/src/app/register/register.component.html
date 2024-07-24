@@ -1,10 +1,10 @@
 <div class="register-container">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill">
-        <mat-label>Username</mat-label>
-        <input matInput formControlName="username" />
-        <mat-error *ngIf="registerForm.get('username')?.hasError('required')">
-          Username is required
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+        <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+          Email is required
         </mat-error>
       </mat-form-field>
   

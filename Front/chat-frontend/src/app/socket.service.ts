@@ -9,7 +9,7 @@ export class SocketService {
   private socket: Socket;
 
   constructor() {
-    this.socket = io('http://localhost:3000'); // Change to your backend's URL
+    this.socket = io('http://localhost:3000'); 
   }
 
   public onMessage(callback: (data: any) => void): void {

@@ -4,12 +4,12 @@ const authController = require('../controller/auth');
 const router = express.Router();
 
 router.post(
-  '/signup',
+  '/register',
   [
     body('email').isEmail().withMessage('Please enter a valid email.').normalizeEmail(),
     body('password').trim().isLength({ min: 5 })
   ],
-  authController.signup
+  authController.register
 );
 
 router.post('/login', authController.login);

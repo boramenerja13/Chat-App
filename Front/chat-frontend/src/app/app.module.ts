@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -18,8 +19,10 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
   declarations: [
     AppComponent,
     ChatComponent,
+    LoginComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -30,9 +33,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     MatInputModule,
     MatButtonModule,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
