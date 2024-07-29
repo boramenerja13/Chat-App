@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { SocketService } from './socket.service';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -34,7 +35,10 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     MatButtonModule,
     LoginComponent,
     RegisterComponent,
+    SocketIoModule
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+ 

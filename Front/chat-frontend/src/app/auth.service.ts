@@ -1,45 +1,7 @@
-// import { HttpClient } from '@angular/common/http';
-// import { Injectable } from '@angular/core';
-// import { io, Socket } from 'socket.io-client';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class AuthService {
-//   private socket: Socket;
-
-//   constructor(private httpClient: HttpClient) {
-//     this.socket = io('http://localhost:3000'); 
-//   }
-
-//   register(data: { email: string, password: string, confirmPassword: string }) {
-//     return new Promise((resolve, reject) => {
-//       this.socket.emit('register', data);
-//       this.socket.on('register_response', (response) => {
-//         if (response.error) {
-//           reject(response.error);
-//         } else {
-//           resolve(response);
-//         }
-//       });
-//     });
-//   }
-
-//   login(data: { email: string, password: string }) {
-//     return new Promise((resolve, reject) => {
-//       this.socket.emit('login', data);
-//       this.socket.on('login_response', (response) => {
-//         if (response.error) {
-//           reject(response.error);
-//         } else {
-//           resolve(response);
-//         }
-//       });
-//     });
-//   }
-// }
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -53,7 +15,20 @@ export class AuthService {
   }
 
   login(data: { email: string; password: string }) {
-    return this.httpClient.post(`${this.appUrl}/login`, data);
+    return this.httpClient.post<{ token: string }>(`${this.appUrl}/login`, data)
+      .pipe(
+        tap(response => {
+          localStorage.setItem('access_token', response.token);
+        })
+      );
+  }
+
+  logout() {
+    localStorage.removeItem('access_token');
+  }
+
+  public get loggedIn(): boolean {
+    return localStorage.getItem('access_token') !== null;
   }
 }
 
