@@ -1,16 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { SocketService } from '../socket.service';
+import { SocketService } from '../../services/socket.service';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
+import { HeaderComponent } from '../../shared/header/header.component';
+import { MessageInputComponent } from '../message-input/message-input.component';
+// import { ChatRoomListComponent } from '../chat-room-list/chat-room-list.component';
+// import { MessageListComponent } from '../message-list/message-list.component';
+// import { UserListComponent } from '../user-list/user-list.component';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatListModule],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    ReactiveFormsModule, 
+    MatButtonModule, 
+    MatInputModule, 
+    MatListModule,
+    HeaderComponent,
+    MessageInputComponent
+    // ChatRoomListComponent, 
+    // MessageListComponent, 
+    // UserListComponent
+  ],
   standalone: true
 })
 export class ChatComponent implements OnInit {
@@ -33,4 +50,3 @@ export class ChatComponent implements OnInit {
     }
   }
 }
-

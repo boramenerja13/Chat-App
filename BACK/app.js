@@ -45,6 +45,10 @@ mongoose.connect('mongodb+srv://boramenerja:bora2000@cluster0.fzoxfay.mongodb.ne
         console.log(data);
         io.emit('message', data);
       });
+
+      // Emit chat rooms and users when a client connects
+      socket.emit('chat-rooms', ['General', 'Sports', 'Technology']);
+      socket.emit('users', ['User1', 'User2', 'User3']);
     });
 
     server.listen(3000, () => {
@@ -56,4 +60,3 @@ mongoose.connect('mongodb+srv://boramenerja:bora2000@cluster0.fzoxfay.mongodb.ne
   });
 
 module.exports = { app, io };
-

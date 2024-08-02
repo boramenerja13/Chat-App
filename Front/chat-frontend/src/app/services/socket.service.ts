@@ -1,4 +1,3 @@
-// socket.service.ts in your Angular project
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 
@@ -21,4 +20,5 @@ export class SocketService {
     console.log('mesage sent')
     this.socket.emit('message', message);
   }
+ 
 }
