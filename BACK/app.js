@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const messageRoutes = require('./routes/exchangeMessage');
+const messagesRoutes = require('./routes/exchangeMessage');
 const authRoutes = require('./routes/auth');
-const authController = require('./controller/auth');
+const messageRoutes = require('./routes/message');
 const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
@@ -21,8 +21,10 @@ app.use(cors());
 
 const authMiddleware = require('./middleware/is-auth');
 
-app.use('/messages', authMiddleware, messageRoutes);
+app.use('/messages', authMiddleware, messagesRoutes);
 app.use('/auth', authRoutes);
+app.use('/message', messageRoutes);
+
 
 app.use((error, req, res, next) => {
   console.error(error);
