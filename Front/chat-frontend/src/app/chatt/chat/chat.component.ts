@@ -7,7 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MessageInputComponent } from '../message-input/message-input.component';
-// import { ChatRoomListComponent } from '../chat-room-list/chat-room-list.component';
+import { ChatRoomListComponent } from '../chat-room-list/chat-room-list.component';
 import { MessageListComponent } from '../message-list/message-list.component';
 // import { UserListComponent } from '../user-list/user-list.component';
 
@@ -24,7 +24,7 @@ import { MessageListComponent } from '../message-list/message-list.component';
     MatListModule,
     HeaderComponent,
     MessageInputComponent,
-    // ChatRoomListComponent, 
+    ChatRoomListComponent, 
     MessageListComponent
     // UserListComponent
   ],

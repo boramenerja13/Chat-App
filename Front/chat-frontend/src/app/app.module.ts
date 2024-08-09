@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { MessageInputComponent } from './chatt/message-input/message-input.component'; 
-// import { MessageListComponent } from './chatt/message-list/message-list.component';
+import { MessageListComponent } from './chatt/message-list/message-list.component';
 // import { UserListComponent } from './chatt/user-list/user-list.component'; 
 import { ChatRoomListComponent } from './chatt/chat-room-list/chat-room-list.component';
 import { SharedModule } from './shared/shared.module';
@@ -29,7 +29,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     RegisterComponent,
     ChatComponent,
     MessageInputComponent,
-    // MessageListComponent,
+    MessageListComponent,
     // UserListComponent, 
     ChatRoomListComponent, 
   ],
