@@ -5,9 +5,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { ChatComponent } from './chatt/chat/chat.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { MessageInputComponent } from './chatt/message-input/message-input.component';
-// import { ProfileComponent } from './shared/profile/profile.component';
-// import { SettingsComponent } from './shared/settings/settings.component';
-// import { MessageListComponent } from './chatt/message-list/message-list.component';
+import { UserListComponent } from './chatt/user-list/user-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,9 +14,8 @@ const routes: Routes = [
   { path: 'chat', component: ChatComponent },
   { path: 'header', component: HeaderComponent},
   { path: 'message', component: MessageInputComponent },
-  // { path: 'profile', component: ProfileComponent },
-  // { path: 'settings', component: SettingsComponent },
-  // { path: 'message/list', component: MessageListComponent }
+  { path: 'users', component: UserListComponent },
+  { path: '**', redirectTo: '/users' }
 ];
 
 @NgModule({

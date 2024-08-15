@@ -1,17 +1,9 @@
-// // chat-room.service.ts
-// import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
-// import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class ChatRoomService {
-//   private apiUrl = 'http://localhost:3000/api/chat-rooms';
+@Injectable({
+  providedIn: 'root'
+})
+export class ChatRoomService {
 
-//   constructor(private http: HttpClient) {}
-
-//   getChatRooms(): Observable<any[]> {
-//     return this.http.get<any[]>(this.apiUrl);
-//   }
-// }
+  constructor() { }
+}

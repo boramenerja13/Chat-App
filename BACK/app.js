@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const messagesRoutes = require('./routes/exchangeMessage');
 const authRoutes = require('./routes/auth');
 const messageRoutes = require('./routes/message');
+const userRoutes = require('./routes/user');
 const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
@@ -24,7 +25,7 @@ const authMiddleware = require('./middleware/is-auth');
 app.use('/messages', authMiddleware, messagesRoutes);
 app.use('/auth', authRoutes);
 app.use('/message', messageRoutes);
-
+app.use('/users', userRoutes);
 
 app.use((error, req, res, next) => {
   console.error(error);

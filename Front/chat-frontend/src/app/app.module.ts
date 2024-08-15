@@ -16,8 +16,12 @@ import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { MessageInputComponent } from './chatt/message-input/message-input.component'; 
 import { MessageListComponent } from './chatt/message-list/message-list.component';
-// import { UserListComponent } from './chatt/user-list/user-list.component'; 
+import { UserListComponent } from './chatt/user-list/user-list.component';
 import { SharedModule } from './shared/shared.module';
+import { SocketService } from './services/socket.service';
+import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
+import { ChatRoomService } from './services/chat-room.service';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -29,7 +33,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     ChatComponent,
     MessageInputComponent,
     MessageListComponent,
-    // UserListComponent, 
+    UserListComponent, 
   ],
   imports: [
     CommonModule,
@@ -46,7 +50,12 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     ReactiveFormsModule,
     SocketIoModule.forRoot(config),
   ],
-  providers: [],
+  providers: [
+    SocketService,
+    UserService,
+    ChatRoomService,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
