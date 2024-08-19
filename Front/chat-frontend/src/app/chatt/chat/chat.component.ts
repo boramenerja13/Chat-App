@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MessageInputComponent } from '../message-input/message-input.component';
 import { MessageListComponent } from '../message-list/message-list.component';
-// import { UserListComponent } from '../user-list/user-list.component';
+import { UserListComponent } from '../user-list/user-list.component';
 
 @Component({
   selector: 'app-chat',
@@ -23,7 +23,8 @@ import { MessageListComponent } from '../message-list/message-list.component';
     MatListModule,
     HeaderComponent,
     MessageInputComponent,
-    MessageListComponent
+    MessageListComponent,
+    UserListComponent
   ],
   standalone: true
 })
@@ -47,3 +48,4 @@ export class ChatComponent implements OnInit {
     }
   }
 }
+

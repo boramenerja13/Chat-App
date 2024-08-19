@@ -1,34 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { SocketService } from '../../services/socket.service';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
+import { UserService } from '../../services/user.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule} from '@angular/material/card';
+
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css'],
+  standalone: true,
   imports: [
-    MatCardModule,
+    CommonModule,
+    MatListModule,
     MatIconModule,
-    MatListModule
-  ], 
-  standalone: true
+    MatCardModule
+  ]
 })
 export class UserListComponent implements OnInit {
   users: any[] = [];
 
-  constructor(private userService: UserService, private socketService: SocketService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.getUsers();
-
-    this.socketService.onUserListUpdate((users: any[]) => {
-      this.users = users;
-    });
-  }
-
-  getUsers(): void {
     this.userService.getUsers().subscribe((users: any[]) => {
       this.users = users;
     });

@@ -34,16 +34,29 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message });
 });
 
+// Maintain a list of connected users
+const users = {};
+
 //regjistron routet ne entry point 
 mongoose.connect('mongodb+srv://boramenerja:bora2000@cluster0.fzoxfay.mongodb.net/chatapp')
   .then(result => {
     io.on('connection', (socket) => {
       console.log('a user connected');
 
-      socket.on('disconnect', () => {
-        console.log('user disconnected');
+      // Handle user login
+      socket.on('login', (username) => {
+        users[socket.id] = username;
+        io.emit('users', Object.values(users));
       });
 
+      // Handle user disconnect
+      socket.on('disconnect', () => {
+        console.log('user disconnected');
+        delete users[socket.id];
+        io.emit('users', Object.values(users));
+      });
+
+      // Handle messages
       socket.on('message', (data) => {
         console.log(data);
         io.emit('message', data);
@@ -51,7 +64,7 @@ mongoose.connect('mongodb+srv://boramenerja:bora2000@cluster0.fzoxfay.mongodb.ne
 
       // Emit chat rooms and users when a client connects
       socket.emit('chat-rooms', ['General', 'Sports', 'Technology']);
-      socket.emit('users', ['User1', 'User2', 'User3']);
+      io.emit('users', Object.values(users));
     });
 
     server.listen(3000, () => {
