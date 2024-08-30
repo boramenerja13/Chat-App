@@ -5,6 +5,7 @@ const messagesRoutes = require('./routes/exchangeMessage');
 const authRoutes = require('./routes/auth');
 const messageRoutes = require('./routes/message');
 const userRoutes = require('./routes/user');
+const chatRoomRoutes = require('./routes/chat-room');
 const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
@@ -26,6 +27,7 @@ app.use('/messages', authMiddleware, messagesRoutes);
 app.use('/auth', authRoutes);
 app.use('/message', messageRoutes);
 app.use('/users', userRoutes);
+app.use('/chat-rooms', chatRoomRoutes);
 
 app.use((error, req, res, next) => {
   console.error(error);
@@ -34,7 +36,7 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message });
 });
 
-// Maintain a list of connected users
+//list of connected users
 const users = {};
 
 //regjistron routet ne entry point 
@@ -43,7 +45,8 @@ mongoose.connect('mongodb+srv://boramenerja:bora2000@cluster0.fzoxfay.mongodb.ne
     io.on('connection', (socket) => {
       console.log('a user connected');
 
-      // Handle user login
+      io.use(authMiddleware);
+
       socket.on('login', (username) => {
         users[socket.id] = username;
         io.emit('users', Object.values(users));

@@ -14,3 +14,13 @@ class MessageController {
 }
 
 module.exports = new MessageController();
+
+exports.saveMessage = async (req, res, next) => {
+  try {
+    const { chatRoomId, senderId, content } = req.body;
+    const message = await messageService.saveMessage(chatRoomId, senderId, content);
+    res.status(201).json({ message });
+  } catch (error) {
+    next(error);
+  }
+};

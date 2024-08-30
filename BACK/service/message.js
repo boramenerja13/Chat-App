@@ -13,3 +13,8 @@ class MessageService {
 }
 
 module.exports = new MessageService();
+
+exports.saveMessage = async (chatRoomId, senderId, content) => {
+  const message = new Message({ chatRoom: chatRoomId, sender: senderId, content });
+  return await message.save();
+};
