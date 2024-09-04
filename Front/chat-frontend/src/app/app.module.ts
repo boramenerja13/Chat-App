@@ -21,6 +21,7 @@ import { SharedModule } from './shared/shared.module';
 import { SocketService } from './services/socket.service';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
+import { ChatRoomComponent } from './chatt/chat-room/chat-room.component';  
 import { ChatRoomService } from './services/chat-room.service';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
@@ -33,7 +34,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     ChatComponent,
     MessageInputComponent,
     MessageListComponent,
-    UserListComponent, 
+    UserListComponent,
+    ChatRoomComponent
   ],
   imports: [
     CommonModule,

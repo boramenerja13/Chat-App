@@ -3,12 +3,13 @@ import { SocketService } from '../../services/socket.service';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
+import { MatListModule } from '@angular/material/list'; 
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MessageInputComponent } from '../message-input/message-input.component';
 import { MessageListComponent } from '../message-list/message-list.component';
 import { UserListComponent } from '../user-list/user-list.component';
+import { ChatRoomComponent } from '../chat-room/chat-room.component';
 
 @Component({
   selector: 'app-chat',
@@ -20,11 +21,12 @@ import { UserListComponent } from '../user-list/user-list.component';
     ReactiveFormsModule, 
     MatButtonModule, 
     MatInputModule, 
-    MatListModule,
+    MatListModule, 
     HeaderComponent,
     MessageInputComponent,
     MessageListComponent,
-    UserListComponent
+    UserListComponent,
+    ChatRoomComponent
   ],
   standalone: true
 })
@@ -48,4 +50,3 @@ export class ChatComponent implements OnInit {
     }
   }
 }
-

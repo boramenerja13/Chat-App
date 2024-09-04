@@ -6,6 +6,7 @@ import { ChatComponent } from './chatt/chat/chat.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { MessageInputComponent } from './chatt/message-input/message-input.component';
 import { UserListComponent } from './chatt/user-list/user-list.component';
+import { ChatRoomComponent } from './chatt/chat-room/chat-room.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'header', component: HeaderComponent},
   { path: 'message', component: MessageInputComponent },
   { path: 'users', component: UserListComponent },
+  { path: 'chat-room/:roomId', component: ChatRoomComponent },
   { path: '**', redirectTo: '/users' }
 ];
 
