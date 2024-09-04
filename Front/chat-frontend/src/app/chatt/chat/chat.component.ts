@@ -4,6 +4,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list'; 
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MessageInputComponent } from '../message-input/message-input.component';
@@ -26,7 +27,8 @@ import { ChatRoomComponent } from '../chat-room/chat-room.component';
     MessageInputComponent,
     MessageListComponent,
     UserListComponent,
-    ChatRoomComponent
+    ChatRoomComponent,
+    MatSidenavModule
   ],
   standalone: true
 })

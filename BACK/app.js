@@ -1,3 +1,4 @@
+// app.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -14,6 +15,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
+    origin: '*', // Adjust as needed for your frontend
+    methods: ['GET', 'POST'],
     credentials: true
   }
 });
@@ -22,6 +25,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const authMiddleware = require('./middleware/is-auth');
+const socketAuth = require('./middleware/socket-auth'); // New Socket.io middleware
 
 app.use('/messages', authMiddleware, messagesRoutes);
 app.use('/auth', authRoutes);
@@ -36,36 +40,36 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message });
 });
 
-//list of connected users
+// List of connected users
 const users = {};
 
 //regjistron routet ne entry point 
 mongoose.connect('mongodb+srv://boramenerja:bora2000@cluster0.fzoxfay.mongodb.net/chatapp')
   .then(result => {
+    // Use the new Socket.io middleware
+    io.use(socketAuth);
+
     io.on('connection', (socket) => {
-      console.log('a user connected');
+      console.log('A user connected:', socket.user.username); // Assuming decoded token has 'username'
 
-      io.use(authMiddleware);
-
-      socket.on('login', (username) => {
-        users[socket.id] = username;
-        io.emit('users', Object.values(users));
-      });
+      // Add user to the list
+      users[socket.id] = socket.user.username;
+      io.emit('users', Object.values(users));
 
       // Handle user disconnect
       socket.on('disconnect', () => {
-        console.log('user disconnected');
+        console.log('User disconnected:', socket.user.username);
         delete users[socket.id];
         io.emit('users', Object.values(users));
       });
 
       // Handle messages
       socket.on('message', (data) => {
-        console.log(data);
+        console.log('Message received:', data);
         io.emit('message', data);
       });
 
-      // Emit chat rooms and users when a client connects
+      // Emit chat rooms and current users
       socket.emit('chat-rooms', ['General', 'Sports', 'Technology']);
       io.emit('users', Object.values(users));
     });

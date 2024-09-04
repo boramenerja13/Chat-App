@@ -1,11 +1,17 @@
 const jwt = require('jsonwebtoken');
 
 const socketAuth = (socket, next) => {
-  const token = socket.handshake.query.token;
+  
+  // Extract token from handshake query or auth object
+  const token = socket.handshake.auth.token || socket.handshake.query.token;
+
   if (token) {
     jwt.verify(token, 'secretcode', (err, decoded) => {
-      if (err) return next(new Error('Authentication error'));
-      socket.decoded = decoded;
+      if (err) {
+        console.error('Socket authentication error:', err);
+        return next(new Error('Authentication error'));
+      }
+      socket.user = decoded; // Attach decoded user to socket
       next();
     });
   } else {

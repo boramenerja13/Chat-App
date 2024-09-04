@@ -1,10 +1,14 @@
 <app-header></app-header>
-<div class="chat-container">
-  <app-chat-room></app-chat-room>
-  <div class="chat-area">
-    <app-message-list></app-message-list>
-    <app-message-input></app-message-input>
-  </div> 
-  <app-user-list></app-user-list>
-</div>
+<div class="chat-container mat-elevation-z4">
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav mode="side" opened class="user-list">
+      <app-chat-room></app-chat-room>
+      <app-user-list></app-user-list>
+    </mat-sidenav>
 
+    <mat-sidenav-content class="chat-area">
+      <app-message-list class="message-list"></app-message-list>
+      <app-message-input class="message-input"></app-message-input>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
