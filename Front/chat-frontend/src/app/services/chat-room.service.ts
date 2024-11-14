@@ -10,10 +10,11 @@ export class ChatRoomService {
 
   constructor(private http: HttpClient) { }
 
-  // Method to get messages for a specific chat room
   getMessages(roomId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/${roomId}/messages`);
   }
 
-  // Add more methods for creating chat rooms, sending messages, etc.
+  getOrCreateChatRoom(participants: string[], name: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/find`, { participants, name });
+  }
 }
