@@ -5,16 +5,17 @@ class MessageService {
     return await Message.find();
   }
 
-  async addMessage(content) {
-    const message = new Message({ content });
+  // async addMessage(content) {
+  //   const message = new Message({ content });
+  //   await message.save();
+  //   return message;
+  // }
+
+  async saveMessage(chatRoomId, senderId, content) {
+    const message = new Message({ chatRoom: chatRoomId, sender: senderId, content });
     await message.save();
     return message;
   }
 }
 
 module.exports = new MessageService();
-
-exports.saveMessage = async (chatRoomId, senderId, content) => {
-  const message = new Message({ chatRoom: chatRoomId, sender: senderId, content });
-  return await message.save();
-};

@@ -1,4 +1,3 @@
-// app.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -15,7 +14,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*', // Adjust as needed for your frontend
+    origin: '*',
     methods: ['GET', 'POST'],
     credentials: true
   }
@@ -25,7 +24,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const authMiddleware = require('./middleware/is-auth');
-const socketAuth = require('./middleware/socket-auth'); // New Socket.io middleware
+const socketAuth = require('./middleware/socket-auth');
 
 app.use('/messages', authMiddleware, messagesRoutes);
 app.use('/auth', authRoutes);
@@ -36,41 +35,41 @@ app.use('/chat-rooms', chatRoomRoutes);
 app.use((error, req, res, next) => {
   console.error(error);
   const status = error.statusCode || 500;
-  const message = error.message;
-  res.status(status).json({ message: message });
+  res.status(status).json({ message: error.message });
 });
 
-// List of connected users
-const users = {};
+const users = {};// List of connected users
 
-//regjistron routet ne entry point 
-mongoose.connect('mongodb+srv://boramenerja:bora2000@cluster0.fzoxfay.mongodb.net/chatapp')
+mongoose.connect('mongodb+srv://boramenerja:bora2000@cluster0.fzoxfay.mongodb.net/chatapp')//regjistron routet ne entry point 
   .then(result => {
-    // Use the new Socket.io middleware
     io.use(socketAuth);
 
-    io.on('connection', (socket) => {
-      console.log('A user connected:', socket.user.username); // Assuming decoded token has 'username'
-
-      // Add user to the list
+    io.on('connection', async (socket) => {
+      console.log('A user connected:', socket.user.username);// Assuming decoded token has 'username'
       users[socket.id] = socket.user.username;
       io.emit('users', Object.values(users));
 
-      // Handle user disconnect
       socket.on('disconnect', () => {
         console.log('User disconnected:', socket.user.username);
         delete users[socket.id];
         io.emit('users', Object.values(users));
       });
 
-      // Handle messages
-      socket.on('message', (data) => {
+      socket.on('message', async (data) => {//handle mesazhet
         console.log('Message received:', data);
-        io.emit('message', data);
+
+        // Save message to the database
+        try {
+          const message = await MessageService.saveMessage(data.chatRoomId, data.senderId, data.content);
+          io.to(data.chatRoomId).emit('message', message);
+        } catch (error) {
+          console.error('Error saving message:', error);
+        }
       });
 
-      // Emit chat rooms and current users
-      socket.emit('chat-rooms', ['General', 'Sports', 'Technology']);
+      // Send initial chat rooms
+      socket.emit('chat-rooms', await ChatRoomService.getAllChatRooms());      // Emit chat rooms and current users
+      // Update users list for the current user
       io.emit('users', Object.values(users));
     });
 

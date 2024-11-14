@@ -2,7 +2,7 @@ const chatRoomService = require('../service/chat-room');
 
 exports.getOrCreateChatRoom = async (req, res, next) => {
   try {
-    const { participants, name } = req.body;
+    const { participants, name } = req.body;  
     console.log('Participants received:', participants);
 
     if (!participants || participants.length !== 2) {
@@ -17,6 +17,15 @@ exports.getOrCreateChatRoom = async (req, res, next) => {
   }
 };
 
+exports.getChatRoomMessages = async (req, res, next) => {
+  try {
+    const chatRoomId = req.params.chatRoomId;
+    const messages = await chatRoomService.getMessagesByChatRoom(chatRoomId);
+    res.status(200).json({ messages });
+  } catch (error) {
+    next(error);
+  }
+};
 exports.getChatRoomMessages = async (req, res, next) => {
   try {
     const chatRoomId = req.params.chatRoomId;
